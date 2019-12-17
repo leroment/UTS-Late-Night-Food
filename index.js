@@ -95,31 +95,33 @@ app.get("/profile", (req, res) => {
 
 function handleProfile() {
   let profilePayload = {
-    ...getGetStarted()
+    ...getGreeting()
   };
 
   callMessengerProfileAPI(profilePayload);
 }
 
-function getGetStarted() {
+function getGreeting() {
+  let greetings = [];
+
+  for (let locale of locales) {
+    greetings.push(getGreetingText());
+  }
+
   return {
-    get_started: {
-      payload: "Hello, this is Andrew."
-    }
+    greeting: greetings
   };
 }
 
-// function getGreeting() {
-//   let greetings = [];
+function getGreetingText() {
+  let localizedGreeting = {
+    locale: "en_US",
+    text: "Hello!!!!"
+  };
 
-//   for (let locale of locales) {
-//     greetings.push(this.getGreetingText(locale));
-//   }
-
-//   return {
-//     greeting: greetings
-//   };
-// }
+  console.log(localizedGreeting);
+  return localizedGreeting;
+}
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
