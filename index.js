@@ -95,7 +95,7 @@ app.get("/profile", (req, res) => {
 
 function handleProfile() {
   let profilePayload = {
-    ...this.getGetStarted()
+    ...getGetStarted()
   };
 
   callMessengerProfileAPI(profilePayload);
