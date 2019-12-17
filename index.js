@@ -71,6 +71,56 @@ app.get("/webhook", (req, res) => {
   }
 });
 
+app.get("/profile", (req, res) => {
+  // Your verify token. Should be a random string.
+  let VERIFY_TOKEN = "utslatenightfood";
+
+  // Parse the query params
+  let mode = req.query["hub.mode"];
+  let token = req.query["hub.verify_token"];
+  let challenge = req.query["hub.challenge"];
+
+  // check if token and mode is in query string of request
+  if (mode && token) {
+    if (token === VERIFY_TOKEN) {
+      if (mode == "profile" || mode == "all") {
+        handleProfile();
+      }
+    }
+  } else {
+    // Returns a '404 Not Found' if mode or token are missing
+    res.sendStatus(404);
+  }
+});
+
+function handleProfile() {
+  let profilePayload = {
+    ...this.getGetStarted()
+  };
+
+  callMessengerProfileAPI(profilePayload);
+}
+
+function getGetStarted() {
+  return {
+    get_started: {
+      payload: "Hello, this is Andrew."
+    }
+  };
+}
+
+// function getGreeting() {
+//   let greetings = [];
+
+//   for (let locale of locales) {
+//     greetings.push(this.getGreetingText(locale));
+//   }
+
+//   return {
+//     greeting: greetings
+//   };
+// }
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
   let response;
@@ -159,6 +209,29 @@ function callSendAPI(sender_psid, response) {
         console.log("message sent!");
       } else {
         console.error("Unable to send message:" + err);
+      }
+    }
+  );
+}
+
+function callMessengerProfileAPI(requestBody) {
+  // Send the HTTP request to the Messenger Profile API
+
+  console.log(`Setting Messenger Profile for app ${config.appId}`);
+  request(
+    {
+      uri: `${config.mPlatfom}/me/messenger_profile`,
+      qs: {
+        access_token: config.pageAccesToken
+      },
+      method: "POST",
+      json: requestBody
+    },
+    (error, _res, body) => {
+      if (!error) {
+        console.log("Request sent:", body);
+      } else {
+        console.error("Unable to send message:", error);
       }
     }
   );
