@@ -54,9 +54,7 @@ module.exports = class Receive {
 
     let response;
 
-    response = [
-      Response.genText("HELLO!!! This is a robot generated message!")
-    ];
+    response = Response.genText("HELLO!!! This is a robot generated message!");
 
     return response;
   }
