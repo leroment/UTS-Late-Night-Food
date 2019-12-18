@@ -6,7 +6,6 @@ require("dotenv").config();
 const express = require("express"),
   Receive = require("./services/receive"),
   bodyParser = require("body-parser"),
-  request = require("request"),
   app = express().use(bodyParser.json());
 
 // Sets server port and logs message on sucess

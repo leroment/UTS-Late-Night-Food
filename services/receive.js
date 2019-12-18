@@ -4,7 +4,8 @@ require("dotenv").config();
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-const Response = require("./response");
+const Response = require("./response"),
+  request = require("request");
 
 module.exports = class Receive {
   constructor(psid, webhookEvent) {
