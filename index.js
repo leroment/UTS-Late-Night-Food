@@ -63,3 +63,7 @@ app.post("/webhook", (req, res) => {
     res.sendStatus(404);
   }
 });
+
+app.get("/profile", (req, res) => {
+  console.log("hi!");
+});
