@@ -65,5 +65,19 @@ app.post("/webhook", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
-  console.log("hi!");
+  let token = req.query["verify_token"];
+  let mode = req.query["mode"];
+  let VERIFY_TOKEN = "utslatenightfood";
+
+  var Profile = require("./services/profile.js");
+  Profile = new Profile();
+
+  if (mode && token) {
+    if (token === VERIFY_TOKEN) {
+      if (mode == "profile" || mode == "all") {
+        Profile.setThread();
+        res.write(`<p>Set Messenger Profile of Page ${config.pageId}</p>`);
+      }
+    }
+  }
 });
