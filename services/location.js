@@ -3,7 +3,7 @@
 const Response = require("./response");
 
 module.exports = class Location {
-  static handlePayload(payload, title = "") {
+  static handlePayload(payload, title = "df") {
     let response;
 
     if (payload === "LOCATION_SELECTED") {
@@ -30,6 +30,7 @@ module.exports = class Location {
         }
       ]);
     } else {
+      console.log(title);
       response = Response.genText(`You have selected ${title}!`);
     }
 
