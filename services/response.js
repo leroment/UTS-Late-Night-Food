@@ -119,7 +119,8 @@ module.exports = class Response {
 
     let buttons = this.genButtonTemplate("Selection Options", [
       this.genPostbackButton("Choose Location", "SELECTED_LOCATION"),
-      this.genPostbackButton("Choose menu", "SELECTED_MENU")
+      this.genPostbackButton("Choose Menu", "SELECTED_MENU"),
+      this.genPostbackButton("Finalise Payment", "SELECTED_PAYMENT")
     ]);
 
     return [welcome, buttons];
