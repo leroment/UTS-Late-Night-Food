@@ -78,7 +78,7 @@ module.exports = class Receive {
     if (payload === "GET_STARTED") {
       response = Response.genNuxMessage();
     } else if (payload.includes("LOCATION")) {
-      response = Location.handlePayload();
+      response = Location.handlePayload(payload);
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`
