@@ -95,7 +95,7 @@ module.exports = class Receive {
 
     let title = this.webhookEvent.message.quick_reply.title;
 
-    return this.handlePayload(payload, title);
+    return Location.handlePayload(payload, title);
   }
 
   // Handles messages events with text
