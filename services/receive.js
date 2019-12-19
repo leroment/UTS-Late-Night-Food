@@ -32,7 +32,7 @@ module.exports = class Receive {
           response = this.handleTextMessage();
         }
       } else if (event.postback) {
-        // response = this.handlePostback();
+        response = this.handlePostback();
       } else if (event.referral) {
         // response = this.handleReferral();
       }
@@ -44,7 +44,41 @@ module.exports = class Receive {
       };
     }
 
-    this.sendMessage(this.psid, response);
+    if (Array.isArray(responses)) {
+      let delay = 0;
+      for (let response of responses) {
+        this.sendMessage(response, delay * 2000);
+        delay++;
+      }
+    } else {
+      this.sendMessage(responses);
+    }
+  }
+
+  // Handles postbacks events
+  handlePostback() {
+    let postback = this.webhookEvent.postback;
+    // Check for the special Get Starded with referral
+    let payload;
+    if (postback.referral && postback.referral.type == "OPEN_THREAD") {
+      payload = postback.referral.ref;
+    } else {
+      // Get the payload of the postback
+      payload = postback.payload;
+    }
+    return this.handlePayload(payload.toUpperCase());
+  }
+
+  handlePayload(payload) {
+    console.log("Received Payload:", `${payload}`);
+
+    let response;
+
+    if (payload === "GET_STARTED") {
+      response = Response.genNuxMessage();
+    }
+
+    return response;
   }
 
   // Handles messages events with text

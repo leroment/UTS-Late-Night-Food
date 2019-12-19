@@ -111,4 +111,12 @@ module.exports = class Response {
 
     return response;
   }
+
+  static genNuxMessage() {
+    let welcome = this.genText(
+      "Hi, Welcome to UTS Late Night Food. Please select from the following options:"
+    );
+
+    return [welcome];
+  }
 };
