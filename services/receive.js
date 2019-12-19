@@ -18,27 +18,27 @@ module.exports = class Receive {
   handleMessage() {
     let event = this.webhookEvent;
 
-    let response;
+    let responses;
 
     try {
       if (event.message) {
         let message = event.message;
 
         if (message.quick_reply) {
-          //   response = this.handleQuickReply();
+          //   responses = this.handleQuickReply();
         } else if (message.attachments) {
-          //   response = this.handleAttachmentMessage();
+          //   responses = this.handleAttachmentMessage();
         } else if (message.text) {
-          response = this.handleTextMessage();
+          responses = this.handleTextMessage();
         }
       } else if (event.postback) {
-        response = this.handlePostback();
+        responses = this.handlePostback();
       } else if (event.referral) {
-        // response = this.handleReferral();
+        // responses = this.handleReferral();
       }
     } catch (error) {
       console.error(error);
-      response = {
+      responses = {
         text: `An error has occured: '${error}'. We have been notified and \
         will fix the issue shortly!`
       };
