@@ -7,8 +7,8 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 module.exports = class Profile {
   setThread() {
     let profilePayload = {
-      ...this.setGetStarted(),
-      ...this.setGreeting()
+      ...this.getGetStarted(),
+      ...this.getGreeting()
     };
 
     this.callMessengerProfileAPI(profilePayload);
