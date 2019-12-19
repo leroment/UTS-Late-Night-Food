@@ -100,12 +100,6 @@ module.exports = class Receive {
 
   // Sends response messages via the Send API
   sendMessage(response, delay = 0) {
-    // Check if there is delay in the response
-    if ("delay" in response) {
-      delay = response["delay"];
-      delete response["delay"];
-    }
-
     // Construct the message body
     let request_body = {
       recipient: {
