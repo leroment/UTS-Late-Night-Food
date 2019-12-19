@@ -26,7 +26,7 @@ module.exports = class Receive {
         let message = event.message;
 
         if (message.quick_reply) {
-          //   responses = this.handleQuickReply();
+          responses = this.handleQuickReply();
         } else if (message.attachments) {
           //   responses = this.handleAttachmentMessage();
         } else if (message.text) {
@@ -77,7 +77,7 @@ module.exports = class Receive {
 
     if (payload === "GET_STARTED") {
       response = Response.genNuxMessage();
-    } else if (payload.includes("SELECTED_LOCATION")) {
+    } else if (payload.includes("LOCATION")) {
       response = Location.handlePayload();
     } else {
       response = {
@@ -86,6 +86,16 @@ module.exports = class Receive {
     }
 
     return response;
+  }
+
+  // Handles mesage events with quick replies
+  handleQuickReply() {
+    // Get the payload of the quick reply
+    let payload = this.webhookEvent.message.quick_reply.payload;
+
+    let title = this.webhookEvent.message.quick_reply.title;
+
+    return this.handlePayload(payload, title);
   }
 
   // Handles messages events with text
