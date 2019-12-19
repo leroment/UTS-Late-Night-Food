@@ -70,12 +70,12 @@ app.post("/profile", (req, res) => {
   let mode = req.query["mode"];
   let VERIFY_TOKEN = "utslatenightfood";
 
-  Profile = new Profile();
+  let profile = new Profile();
 
   if (mode && token) {
     if (token === VERIFY_TOKEN) {
       if (mode == "profile" || mode == "all") {
-        Profile.setThread();
+        profile.setThread();
         res.write(`<p>Set Messenger Profile of Page ${config.pageId}</p>`);
       }
       res.status(200).end();
