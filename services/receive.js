@@ -44,7 +44,7 @@ module.exports = class Receive {
       };
     }
 
-    this.sendMessage(responses);
+    this.sendMessage(this.psid, responses);
   }
 
   // Handles postbacks events
