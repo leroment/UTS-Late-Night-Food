@@ -44,7 +44,15 @@ module.exports = class Receive {
       };
     }
 
-    this.sendMessage(this.psid, responses);
+    if (Array.isArray(responses)) {
+      let delay = 0;
+      for (let response of responses) {
+        this.sendMessage(response, delay * 2000);
+        delay++;
+      }
+    } else {
+      this.sendMessage(responses);
+    }
   }
 
   // Handles postbacks events
@@ -68,6 +76,10 @@ module.exports = class Receive {
 
     if (payload === "GET_STARTED") {
       response = Response.genNuxMessage();
+    } else {
+      response = {
+        text: `This is a default postback message for payload: ${payload}!`
+      };
     }
 
     return response;
@@ -87,32 +99,41 @@ module.exports = class Receive {
   }
 
   // Sends response messages via the Send API
-  sendMessage(sender_psid, response) {
+  sendMessage(response, delay = 0) {
+    // Check if there is delay in the response
+    if ("delay" in response) {
+      delay = response["delay"];
+      delete response["delay"];
+    }
+
     // Construct the message body
     let request_body = {
       recipient: {
-        id: sender_psid
+        id: this.psid
       },
       message: response
     };
 
-    // Send the HTTP request to the Messenger Platform
-    request(
-      {
-        uri: "https://graph.facebook.com/v2.6/me/messages",
-        qs: {
-          access_token: PAGE_ACCESS_TOKEN
+    setTimeout(() => {
+      request(
+        {
+          uri: "https://graph.facebook.com/v2.6/me/messages",
+          qs: {
+            access_token: PAGE_ACCESS_TOKEN
+          },
+          method: "POST",
+          json: request_body
         },
-        method: "POST",
-        json: request_body
-      },
-      (err, res, body) => {
-        if (!err) {
-          console.log("message sent!");
-        } else {
-          console.error("Unable to send message:" + err);
+        (err, res, body) => {
+          if (!err) {
+            console.log("message sent!");
+          } else {
+            console.error("Unable to send message:" + err);
+          }
         }
-      }
-    );
+      );
+    }, delay);
+
+    // Send the HTTP request to the Messenger Platform
   }
 };

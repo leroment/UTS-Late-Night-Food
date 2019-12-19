@@ -117,6 +117,11 @@ module.exports = class Response {
       "Hi, Welcome to UTS Late Night Food. Please select from the following options:"
     );
 
-    return welcome;
+    let buttons = this.genButtonTemplate("Selection Options", [
+      this.genPostbackButton("Choose Location", "SELECTED_LOCATION"),
+      this.genPostbackButton("Choose menu", "SELECTED_MENU")
+    ]);
+
+    return [welcome, buttons];
   }
 };
