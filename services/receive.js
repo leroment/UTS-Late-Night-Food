@@ -44,15 +44,7 @@ module.exports = class Receive {
       };
     }
 
-    if (Array.isArray(responses)) {
-      let delay = 0;
-      for (let response of responses) {
-        this.sendMessage(response, delay * 2000);
-        delay++;
-      }
-    } else {
-      this.sendMessage(responses);
-    }
+    this.sendMessage(responses);
   }
 
   // Handles postbacks events
