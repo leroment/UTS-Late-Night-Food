@@ -66,8 +66,8 @@ app.post("/webhook", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-  let token = req.query["verify_token"];
-  let mode = req.query["mode"];
+  let token = req.query["hub.verify_token"];
+  let mode = req.query["hub.mode"];
   let VERIFY_TOKEN = "utslatenightfood";
 
   let profile = new Profile();
