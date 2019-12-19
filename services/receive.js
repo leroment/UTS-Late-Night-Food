@@ -5,6 +5,7 @@ require("dotenv").config();
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const Response = require("./response"),
+  Location = require("./location"),
   request = require("request");
 
 module.exports = class Receive {
@@ -76,6 +77,8 @@ module.exports = class Receive {
 
     if (payload === "GET_STARTED") {
       response = Response.genNuxMessage();
+    } else if (payload.includes("SELECTED_LOCATION")) {
+      response = Location.handlePayload();
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`
