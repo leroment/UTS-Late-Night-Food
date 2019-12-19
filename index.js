@@ -5,6 +5,7 @@ require("dotenv").config();
 // Imports dependencies and set up http server
 const express = require("express"),
   Receive = require("./services/receive"),
+  Profile = require("./services/profile"),
   bodyParser = require("body-parser"),
   app = express().use(bodyParser.json());
 
@@ -64,12 +65,11 @@ app.post("/webhook", (req, res) => {
   }
 });
 
-app.get("/profile", (req, res) => {
+app.post("/profile", (req, res) => {
   let token = req.query["verify_token"];
   let mode = req.query["mode"];
   let VERIFY_TOKEN = "utslatenightfood";
 
-  var Profile = require("./services/profile.js");
   Profile = new Profile();
 
   if (mode && token) {
@@ -78,6 +78,13 @@ app.get("/profile", (req, res) => {
         Profile.setThread();
         res.write(`<p>Set Messenger Profile of Page ${config.pageId}</p>`);
       }
+      res.status(200).end();
+    } else {
+      // Responds with '403 Forbidden' if verify tokens do not match
+      res.sendStatus(403);
     }
+  } else {
+    // Returns a '404 Not Found' if mode or token are missing
+    res.sendStatus(404);
   }
 });

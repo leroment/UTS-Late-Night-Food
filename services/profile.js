@@ -42,6 +42,16 @@ module.exports = class Profile {
     return localizedGreeting;
   }
 
+  setGetStarted() {
+    let getStartedPayload = this.getGetStarted();
+    this.callMessengerProfileAPI(getStartedPayload);
+  }
+
+  setGreeting() {
+    let greetingPayload = this.getGreeting();
+    this.callMessengerProfileAPI(greetingPayload);
+  }
+
   callMessengerProfileAPI(requestBody) {
     // Send the HTTP request to the Messenger Profile API
 
