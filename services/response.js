@@ -117,6 +117,6 @@ module.exports = class Response {
       "Hi, Welcome to UTS Late Night Food. Please select from the following options:"
     );
 
-    return [welcome];
+    return welcome;
   }
 };
