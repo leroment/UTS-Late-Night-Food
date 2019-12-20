@@ -30,12 +30,17 @@ module.exports = class Location {
       return response;
     } else {
       let response = Response.genText(`You have selected ${message.text}.`);
-      let menu = Response.genNuxMessage();
+      let buttons = this.genButtonTemplate("Selection Options", [
+        this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+        this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+        this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+      ]);
 
       let responses = [];
 
       responses.push(response);
-      responses.concat(menu);
+
+      responses.push(buttons);
 
       return responses;
     }
