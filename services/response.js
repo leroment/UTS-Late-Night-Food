@@ -39,6 +39,27 @@ module.exports = class Response {
     return response;
   }
 
+  static genGenericTemplateElement(image_url, title, subtitle, buttons) {
+    let element = {
+      title: title,
+      subtitle: subtitle,
+      image_url: image_url,
+      buttons: buttons
+    };
+  }
+
+  static genMultipleGenericTemplate(elements) {
+    let response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: elements
+        }
+      }
+    };
+  }
+
   static genImageTemplate(image_url, title, subtitle = "") {
     let response = {
       attachment: {

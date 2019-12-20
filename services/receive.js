@@ -6,6 +6,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 const Response = require("./response"),
   Location = require("./location"),
+  Menu = require("./menu"),
   request = require("request");
 
 module.exports = class Receive {
@@ -79,6 +80,8 @@ module.exports = class Receive {
       response = Response.genNuxMessage();
     } else if (payload.includes("LOCATION")) {
       response = Location.handlePayload(payload);
+    } else if (payload.includes("MENU")) {
+      response = Menu.handlePayload(payload);
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`
