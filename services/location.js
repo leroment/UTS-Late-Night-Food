@@ -31,7 +31,9 @@ module.exports = class Location {
       ]);
     } else {
       console.log(quickReply);
-      response = Response.genText(`You have selected ${quickReply}!`);
+      response = Response.genText(
+        `You have selected ${quickReply.title} and ${quickReply.payload}!`
+      );
     }
 
     return response;
