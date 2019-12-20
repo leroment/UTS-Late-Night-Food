@@ -95,7 +95,12 @@ module.exports = class Receive {
 
     let message = this.webhookEvent.message;
 
-    return Location.handlePayload(payload, message);
+    let response;
+
+    if (payload.includes("LOCATION")) {
+      response = Location.handlePayload(payload, message);
+    }
+    return response;
   }
 
   // Handles messages events with text

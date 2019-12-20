@@ -4,10 +4,8 @@ const Response = require("./response");
 
 module.exports = class Location {
   static handlePayload(payload, message) {
-    let response;
-
     if (payload === "LOCATION_SELECTED") {
-      response = Response.genQuickReply("Pick a location", [
+      let response = Response.genQuickReply("Pick a location", [
         {
           title: "Yura Mudang",
           payload: "LOCATION_YM"
@@ -29,12 +27,12 @@ module.exports = class Location {
           payload: "LOCATION_WL"
         }
       ]);
+      return response;
     } else {
-      response = Response.genText(
-        `You have selected ${message.text} and ${payload}!`
-      );
-    }
+      let response = Response.genText(`You have selected ${message.text}.`);
+      let menu = Response.genNuxMessage();
 
-    return response;
+      return [response, menu];
+    }
   }
 };
