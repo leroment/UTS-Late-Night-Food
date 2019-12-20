@@ -30,10 +30,10 @@ module.exports = class Location {
       return response;
     } else {
       let response = Response.genText(`You have selected ${message.text}.`);
-      let buttons = this.genButtonTemplate("Selection Options", [
-        this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
-        this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
-        this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+      let buttons = Response.genButtonTemplate("Selection Options", [
+        Response.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+        Response.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+        Response.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
       ]);
 
       let responses = [];
