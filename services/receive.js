@@ -93,11 +93,11 @@ module.exports = class Receive {
     // Get the payload of the quick reply
     let payload = this.webhookEvent.message.quick_reply.payload;
 
-    let quick_reply = this.webhookEvent.message.quick_reply;
+    let message = this.webhookEvent.message;
 
-    console.log(quick_reply);
+    console.log();
 
-    return Location.handlePayload(payload, quick_reply);
+    return Location.handlePayload(payload, message);
   }
 
   // Handles messages events with text

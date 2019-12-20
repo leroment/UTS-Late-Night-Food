@@ -3,7 +3,7 @@
 const Response = require("./response");
 
 module.exports = class Location {
-  static handlePayload(payload, quickReply) {
+  static handlePayload(payload, message) {
     let response;
 
     if (payload === "LOCATION_SELECTED") {
@@ -32,7 +32,7 @@ module.exports = class Location {
     } else {
       console.log(quickReply);
       response = Response.genText(
-        `You have selected ${quickReply.title} and ${quickReply.payload}!`
+        `You have selected ${message.text} and ${payload}!`
       );
     }
 
