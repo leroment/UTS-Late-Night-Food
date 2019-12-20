@@ -15,7 +15,7 @@ module.exports = class Menu {
         "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2016/11/one-pot-paneer-curry-pie.jpg",
         "Set A",
         "$13.00",
-        Response.genPostbackButton("Select Quantity", "MENU_SET_A")
+        [Response.genPostbackButton("Select Quantity", "MENU_SET_A")]
       );
     }
 
