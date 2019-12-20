@@ -32,7 +32,12 @@ module.exports = class Location {
       let response = Response.genText(`You have selected ${message.text}.`);
       let menu = Response.genNuxMessage();
 
-      return [response, menu];
+      let responses = [];
+
+      responses.push(response);
+      responses.concat(menu);
+
+      return responses;
     }
   }
 };
