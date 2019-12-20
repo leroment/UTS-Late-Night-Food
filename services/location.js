@@ -30,7 +30,7 @@ module.exports = class Location {
         }
       ]);
     } else {
-      console.log(title);
+      console.log(quickReply);
       response = Response.genText(`You have selected ${quickReply}!`);
     }
 
