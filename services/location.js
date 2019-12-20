@@ -28,10 +28,16 @@ module.exports = class Location {
         }
       ]);
       return response;
-    } else {
+    } else if (
+      payload === "LOCATION_YM" ||
+      payload === "LOCATION_GN" ||
+      payload === "LOCATION_BN" ||
+      payload === "LOCATION_GE" ||
+      payload === "LOCATION_WL"
+    ) {
       let response = Response.genText(`You have selected ${message.text}.`);
       let buttons = Response.genButtonTemplate("Selection Options", [
-        Response.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+        Response.genPostbackButton("Update Location", "LOCATION_UPDATED"),
         Response.genPostbackButton("Choose Menu", "MENU_SELECTED"),
         Response.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
       ]);
