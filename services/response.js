@@ -113,15 +113,16 @@ module.exports = class Response {
   }
 
   static genNuxMessage() {
-    let welcome = this.genText(
-      "Hi, Welcome to UTS Late Night Food. Please select from the following options:"
-    );
+    let welcome = this.genText("Hi, Welcome to UTS Late Night Food.");
 
-    let buttons = this.genButtonTemplate("Selection Options", [
-      this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
-      this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
-      this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
-    ]);
+    let buttons = this.genButtonTemplate(
+      "Please select from the following options:",
+      [
+        this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+        this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+        this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+      ]
+    );
 
     return [welcome, buttons];
   }
