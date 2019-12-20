@@ -30,7 +30,6 @@ module.exports = class Location {
         }
       ]);
     } else {
-      console.log(quickReply);
       response = Response.genText(
         `You have selected ${message.text} and ${payload}!`
       );
