@@ -15,7 +15,7 @@ module.exports = class Menu {
         "https://techcrunch.com/wp-content/uploads/2017/04/facebook-messenger-f8.jpg",
         "Hi",
         "Yo",
-        [this.genPostbackButton("Select", "FOOD_SELECTED")]
+        [Response.genPostbackButton("Select", "FOOD_SELECTED")]
       );
     }
 
