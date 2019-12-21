@@ -62,16 +62,19 @@ module.exports = class Receive {
     let postback = this.webhookEvent.postback;
     // Check for the special Get Starded with referral
     let payload;
+    let title;
     if (postback.referral && postback.referral.type == "OPEN_THREAD") {
       payload = postback.referral.ref;
+      title = postback.title;
     } else {
       // Get the payload of the postback
       payload = postback.payload;
+      title = postback.title;
     }
-    return this.handlePayload(payload.toUpperCase());
+    return this.handlePayload(payload.toUpperCase(), title);
   }
 
-  handlePayload(payload) {
+  handlePayload(payload, title) {
     console.log("Received Payload:", `${payload}`);
 
     let response;
@@ -81,7 +84,7 @@ module.exports = class Receive {
     } else if (payload.includes("LOCATION")) {
       response = Location.handlePayload(payload);
     } else if (payload.includes("MENU")) {
-      response = Menu.handlePayload(payload);
+      response = Menu.handlePayload(payload, title);
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`

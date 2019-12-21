@@ -36,11 +36,14 @@ module.exports = class Location {
       payload === "LOCATION_WL"
     ) {
       let response = Response.genText(`You have selected ${message.text}.`);
-      let buttons = Response.genButtonTemplate("Selection Options", [
-        Response.genPostbackButton("Update Location", "LOCATION_UPDATED"),
-        Response.genPostbackButton("Choose Menu", "MENU_SELECTED"),
-        Response.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
-      ]);
+      let buttons = Response.genButtonTemplate(
+        "Please select from the following options",
+        [
+          Response.genPostbackButton("Update Location", "LOCATION_SELECTED"),
+          Response.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+          Response.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+        ]
+      );
 
       let responses = [];
 
