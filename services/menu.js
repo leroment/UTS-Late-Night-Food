@@ -12,10 +12,10 @@ module.exports = class Menu {
 
     if (payload === "MENU_SELECTED") {
       response = Response.genGenericTemplate(
-        "https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2016/11/one-pot-paneer-curry-pie.jpg",
-        "Set A",
-        "$13.00",
-        [Response.genPostbackButton("Select Quantity", "MENU_SET_A")]
+        "https://techcrunch.com/wp-content/uploads/2017/04/facebook-messenger-f8.jpg",
+        "Hi",
+        "Yo",
+        [this.genPostbackButton("Select", "FOOD_SELECTED")]
       );
     }
 
