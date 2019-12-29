@@ -7,10 +7,21 @@ const express = require("express"),
   Receive = require("./services/receive"),
   Profile = require("./services/profile"),
   bodyParser = require("body-parser"),
+  MongoClient = require("mongodb").MongoClient,
   app = express().use(bodyParser.json());
 
 // Sets server port and logs message on sucess
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
+
+// Connect to the db
+MongoClient.connect("mongodb://localhost:27017/utslatenightfood", function(
+  err,
+  db
+) {
+  if (!err) {
+    console.log("Database is connected");
+  }
+});
 
 // Adds support for GET requests to our webhook
 app.get("/webhook", (req, res) => {
