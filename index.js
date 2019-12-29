@@ -10,20 +10,24 @@ const express = require("express"),
   MongoClient = require("mongodb").MongoClient,
   app = express().use(bodyParser.json());
 
-var db;
-// Connect to the db
-MongoClient.connect(
-  "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test?retryWrites=true&w=majority",
-  (err, database) => {
-    // ... start the server
-    if (err) return console.log(err);
-    db = database;
-    // Sets server port and logs message on sucess
-    app.listen(process.env.PORT || 1337, () =>
-      console.log("webhook is listening")
-    );
-  }
-);
+// var db;
+// // Connect to the db
+// MongoClient.connect(
+//   "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test",
+//   (err, database) => {
+//     // ... start the server
+//     if (err) return console.log(err);
+//     db = database;
+//     // Sets server port and logs message on sucess
+//     app.listen(process.env.PORT || 1337, () =>
+//       console.log("webhook is listening")
+//     );
+//   }
+// );
+
+// Sets server port and logs message on sucess
+app.listen(process.env.PORT || 1337, () =>
+  console.log("webhook is listening")
 
 // Adds support for GET requests to our webhook
 app.get("/webhook", (req, res) => {
