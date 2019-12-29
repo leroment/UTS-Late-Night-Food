@@ -13,6 +13,16 @@ const express = require("express"),
 // Sets server port and logs message on sucess
 app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
 
+var db;
+
+MongoClient.connect(
+  "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test?retryWrites=true&w=majority",
+  function(err, database) {
+    if (err) return console.log("database error!");
+    db = database;
+  }
+);
+
 // Adds support for GET requests to our webhook
 app.get("/webhook", (req, res) => {
   // Your verify token. Should be a random string.
