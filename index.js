@@ -18,7 +18,10 @@ var db;
 MongoClient.connect(
   "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test?retryWrites=true&w=majority",
   function(err, database) {
-    if (err) return console.log("database error!");
+    if (err) {
+      console.log("database error!");
+      console.log(err);
+    }
     db = database;
   }
 );
