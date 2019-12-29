@@ -20,6 +20,8 @@ MongoClient.connect("mongodb://localhost:27017/utslatenightfood", function(
 ) {
   if (!err) {
     console.log("Database is connected");
+  } else {
+    console.log("Error with database");
   }
 });
 
