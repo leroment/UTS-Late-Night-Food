@@ -10,9 +10,6 @@ const express = require("express"),
   MongoClient = require("mongodb").MongoClient,
   app = express().use(bodyParser.json());
 
-// Sets server port and logs message on sucess
-app.listen(process.env.PORT || 1337, () => console.log("webhook is listening"));
-
 var db;
 
 MongoClient.connect(
@@ -23,6 +20,10 @@ MongoClient.connect(
       console.log(err);
     }
     db = database;
+    // Sets server port and logs message on sucess
+    app.listen(process.env.PORT || 1337, () =>
+      console.log("webhook is listening")
+    );
   }
 );
 
