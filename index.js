@@ -13,7 +13,7 @@ const express = require("express"),
 var db;
 // Connect to the db
 MongoClient.connect(
-  "mongodb://localhost:27017/utslatenightfood",
+  "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test?retryWrites=true&w=majority",
   (err, database) => {
     // ... start the server
     if (err) return console.log(err);
