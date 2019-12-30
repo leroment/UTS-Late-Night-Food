@@ -37,7 +37,7 @@ module.exports = class Menu {
       responses.push(text);
       responses.push(menu);
     } else {
-      let text = Response.genText(`You have selected ${title}.`);
+      let text = Response.genText(`You have selected ${message}.`);
       let buttons = Response.genButtonTemplate(
         "Please select from the following options",
         [
