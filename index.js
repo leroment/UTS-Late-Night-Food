@@ -5,6 +5,7 @@ require("dotenv").config();
 // Imports dependencies and set up http server
 const express = require("express"),
   Receive = require("./services/receive"),
+  Database = require("./services/database"),
   Profile = require("./services/profile"),
   bodyParser = require("body-parser"),
   MongoClient = require("mongodb").MongoClient,
@@ -13,13 +14,26 @@ const express = require("express"),
 var db;
 
 MongoClient.connect(
-  "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/test?retryWrites=true&w=majority",
-  function(err, database) {
+  "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/utslatenightfood",
+  function(err, server) {
     if (err) {
       console.log("database error!");
       console.log(err);
+      return;
     }
-    db = database;
+    console.log("Database success!");
+
+    db = server.db("utslatenightfood");
+
+    var orders = db.collection("orders");
+
+    // orders.insertOne({
+    //   name: "Andrew Cai",
+    //   email: "12546141@student.uts.edu.au"
+    // });
+
+    // orders.save();
+
     // Sets server port and logs message on sucess
     app.listen(process.env.PORT || 1337, () =>
       console.log("webhook is listening")

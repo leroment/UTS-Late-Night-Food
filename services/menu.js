@@ -19,25 +19,40 @@ module.exports = class Menu {
           "https://techcrunch.com/wp-content/uploads/2017/04/facebook-messenger-f8.jpg",
           "Menu A",
           "13.00",
-          [Response.genPostbackButton("Select", "MENU_A_SELECTED")]
+          [
+            Response.genPostbackButton("Select", {
+              menu_name: "Menu A",
+              price: "13.00"
+            })
+          ]
         ),
         Response.genElements(
           "https://techcrunch.com/wp-content/uploads/2017/04/facebook-messenger-f8.jpg",
           "Menu B",
           "14.00",
-          [Response.genPostbackButton("Select", "MENU_B_SELECTED")]
+          [
+            Response.genPostbackButton("Select", {
+              menu_name: "Menu B",
+              price: "14.00"
+            })
+          ]
         ),
         Response.genElements(
           "https://techcrunch.com/wp-content/uploads/2017/04/facebook-messenger-f8.jpg",
           "Menu C",
           "12.40",
-          [Response.genPostbackButton("Select", "MENU_C_SELECTED")]
+          [
+            Response.genPostbackButton("Select", {
+              menu_name: "Menu C",
+              price: "12.40"
+            })
+          ]
         )
       ]);
       responses.push(text);
       responses.push(menu);
     } else {
-      let text = Response.genText(`You have selected ${message}.`);
+      let text = Response.genText(`You have selected ${payload.menu_name}.`);
       let buttons = Response.genButtonTemplate(
         "Please select from the following options",
         [
