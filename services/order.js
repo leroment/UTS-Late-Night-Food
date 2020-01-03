@@ -4,7 +4,7 @@ const Response = require("./response");
 
 let dish;
 
-var response = [];
+var response;
 
 module.exports = class Order {
   static get dish() {
@@ -18,11 +18,9 @@ module.exports = class Order {
   static handlePayload(payload, message) {
     if (payload === "NUMBEROFORDERS") {
       let quantityOfDish = message;
-
-      response.push(
-        Response.genText(`You have selected ${quantityOfDish} sets of ${dish}.`)
+      response = Response.genText(
+        `You have selected ${quantityOfDish} sets of ${dish}.`
       );
-
       dish = "";
     }
 
