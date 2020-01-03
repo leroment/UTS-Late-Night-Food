@@ -2,10 +2,8 @@
 
 require("dotenv").config();
 
-const Response = require("./response");
-const Order = require("./order");
-
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const Response = require("./response"),
+  Order = require("./order");
 
 module.exports = class Menu {
   static handlePayload(payload, message) {
@@ -15,20 +13,10 @@ module.exports = class Menu {
       responses = this.generateMenu();
     } else {
       let text = Response.genText(`You have selected ${message}.`);
-      let number = Response.genQuickReply("How many?", [
-        {
-          title: "1",
-          payload: `${payload}_ONE`
-        },
-        {
-          title: "2",
-          payload: `${payload}_TWO`
-        },
-        {
-          title: "3",
-          payload: `${payload}_THREE`
-        }
-      ]);
+      // assign dish property to order class
+      Order.dish = message;
+
+      let number = Response.genText("How many?");
 
       responses.push(text);
       responses.push(number);

@@ -7,6 +7,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const Response = require("./response"),
   Location = require("./location"),
   Menu = require("./menu"),
+  Order = require("./order"),
   request = require("request");
 
 module.exports = class Receive {
@@ -41,7 +42,7 @@ module.exports = class Receive {
     } catch (error) {
       console.error(error);
       responses = {
-        text: `An error has occured: '${error}'. We have been notified and \
+        text: `An error has occured: '${error}'. We have been notified and
         will fix the issue shortly!`
       };
     }
@@ -112,12 +113,15 @@ module.exports = class Receive {
   // Handles messages events with text
   handleTextMessage() {
     let message = this.webhookEvent.message.text.trim().toLowerCase();
-
-    console.log(message);
-
     let response;
 
-    response = Response.genText("HELLO!!! This is a robot generated message!");
+    if (Number(message)) {
+      response = Order.handlePayload("NUMBEROFORDERS", Number(message));
+    } else {
+      response = Response.genText(
+        "HELLO!!! This is a robot generated message!"
+      );
+    }
 
     return response;
   }
