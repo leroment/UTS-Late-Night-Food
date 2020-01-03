@@ -47,11 +47,17 @@ module.exports = class Order {
     let orderSummary = `Here is your order:\n`;
 
     order.forEach((item, index) => {
-      orderSummary += `${index}. ${item.dish} x ${item.quantity}\n`;
+      orderSummary += `${index + 1}. ${item.dish} x ${item.quantity}\n`;
     });
 
     let response = Response.genText(orderSummary);
 
-    return response;
+    let button = Response.genButtonTemplate(null, [
+      Response.genPostbackButton("Add more to order", "ADD_ORDER"),
+      Response.genPostbackButton("Revise order", "REVISE_ORDER"),
+      Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
+    ]);
+
+    return [response, button];
   }
 };
