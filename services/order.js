@@ -16,7 +16,7 @@ module.exports = class Order {
     dish = d;
   }
 
-  static handlePayload(payload, message) {
+  static handlePayload(payload, message = "") {
     let responses = [];
 
     if (payload === "NUMBEROFORDERS") {
