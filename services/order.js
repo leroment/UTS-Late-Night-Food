@@ -1,8 +1,7 @@
 "use strict";
 
 const Response = require("./response"),
-  Menu = require("./menu"),
-  Database = require("./database");
+  Menu = require("./menu");
 
 let dish;
 let order = [];
@@ -48,8 +47,8 @@ module.exports = class Order {
 
       dish = "";
     } else if (payload === "ADD_ORDER") {
-      Menu.generateMenu();
-    } else if (paylaod === "REVISE_ORDER") {
+      Menu.handlePayload("MENU_SELECTED");
+    } else if (payload === "REVISE_ORDER") {
     } else if (payload === "FINALISE_ORDER") {
     } else {
       responses = [];
