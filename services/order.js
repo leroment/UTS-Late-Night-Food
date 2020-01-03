@@ -50,6 +50,8 @@ module.exports = class Order {
       orderSummary += `${index}. ${item.dish} x ${item.quantity}\n`;
     });
 
-    return orderSummary;
+    let response = Response.genText(orderSummary);
+
+    return response;
   }
 };
