@@ -52,7 +52,7 @@ module.exports = class Order {
 
     let response = Response.genText(orderSummary);
 
-    let button = Response.genButtonTemplate(null, [
+    let button = Response.genButtonTemplate("", [
       Response.genPostbackButton("Add more to order", "ADD_ORDER"),
       Response.genPostbackButton("Revise order", "REVISE_ORDER"),
       Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
