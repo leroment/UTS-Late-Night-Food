@@ -6,7 +6,7 @@ const Response = require("./response"),
   Order = require("./order");
 
 module.exports = class Menu {
-  static handlePayload(payload, message) {
+  static handlePayload(payload, message = "") {
     let responses = [];
 
     if (payload === "MENU_SELECTED") {
