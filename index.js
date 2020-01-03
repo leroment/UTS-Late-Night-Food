@@ -12,6 +12,7 @@ const express = require("express"),
   app = express().use(bodyParser.json());
 
 var db;
+var database;
 
 MongoClient.connect(
   "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/utslatenightfood",
@@ -25,14 +26,7 @@ MongoClient.connect(
 
     db = server.db("utslatenightfood");
 
-    var orders = db.collection("orders");
-
-    // orders.insertOne({
-    //   name: "Andrew Cai",
-    //   email: "12546141@student.uts.edu.au"
-    // });
-
-    // orders.save();d
+    Database.database = db;
 
     // Sets server port and logs message on sucess
     app.listen(process.env.PORT || 1337, () =>

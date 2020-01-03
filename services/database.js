@@ -1,7 +1,21 @@
 "use strict";
 
+let database;
+
 module.exports = class Database {
-  constructor(database) {
-    this.db = database;
+  static get database() {
+    return database;
+  }
+
+  static set database(db) {
+    database = db;
+  }
+
+  static addDocumentToCollection(collection, document) {
+    var collectionName = db.collection(collection);
+
+    collectionName.insertOne(document);
+
+    collectionName.save();
   }
 };

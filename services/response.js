@@ -151,4 +151,17 @@ module.exports = class Response {
 
     return [welcome, buttons];
   }
+
+  static genOptions() {
+    let buttons = this.genButtonTemplate(
+      "Please select from the following options:",
+      [
+        this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+        this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+        this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+      ]
+    );
+
+    return [buttons];
+  }
 };
