@@ -1,7 +1,5 @@
 "use strict";
 
-require("dotenv").config();
-
 const Response = require("./response"),
   Order = require("./order");
 
