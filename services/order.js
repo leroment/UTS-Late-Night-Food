@@ -18,11 +18,12 @@ module.exports = class Order {
   static handlePayload(payload, message) {
     if (payload === "NUMBEROFORDERS") {
       let quantityOfDish = message;
-      console.log(`The number of dishes for ${dish} is ${quantityOfDish}!`);
 
       response.push(
         Response.genText(`You have selected ${quantityOfDish} sets of ${dish}.`)
       );
+
+      dish = "";
     }
 
     return response;
