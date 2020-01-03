@@ -33,7 +33,7 @@ module.exports = class Order {
       let orderSummary = this.generateOrderSummary();
 
       responses.push(q);
-      responses.push(orderSummary);
+      responses.concat(orderSummary);
 
       dish = "";
     } else {
