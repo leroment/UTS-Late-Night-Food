@@ -47,7 +47,7 @@ module.exports = class Order {
 
       dish = "";
     } else if (payload === "ADD_ORDER") {
-      Menu.handlePayload("MENU_SELECTED");
+      let response = Menu.handlePayload("MENU_SELECTED");
       responses.push(response);
     } else if (payload === "REVISE_ORDER") {
     } else if (payload === "FINALISE_ORDER") {
