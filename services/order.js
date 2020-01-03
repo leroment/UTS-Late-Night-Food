@@ -1,6 +1,10 @@
 "use strict";
 
+const Response = require("./response");
+
 let dish;
+
+var response = [];
 
 module.exports = class Order {
   static get dish() {
@@ -15,7 +19,13 @@ module.exports = class Order {
     if (payload === "NUMBEROFORDERS") {
       let quantityOfDish = message;
       console.log(`The number of dishes for ${dish} is ${quantityOfDish}!`);
+
+      response.push(
+        Response.genText(`You have selected ${quantityOfDish} sets of ${dish}.`)
+      );
     }
+
+    return response;
   }
 
   generateOrderSummary() {
