@@ -33,7 +33,17 @@ module.exports = class Order {
       let orderSummary = this.generateOrderSummary();
 
       responses.push(q);
-      responses = responses.concat(orderSummary);
+
+      let buttons = Response.genButtonTemplate(
+        "Please select from the following options",
+        [
+          Response.genPostbackButton("Add more to order", "ADD_ORDER"),
+          Response.genPostbackButton("Revise order", "REVISE_ORDER"),
+          Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
+        ]
+      );
+
+      responses.push(buttons);
 
       dish = "";
     } else {
@@ -52,12 +62,6 @@ module.exports = class Order {
 
     let response = Response.genText(orderSummary);
 
-    let button = Response.genButtonTemplate("", [
-      Response.genPostbackButton("Add more to order", "ADD_ORDER"),
-      Response.genPostbackButton("Revise order", "REVISE_ORDER"),
-      Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
-    ]);
-
-    return [response, button];
+    return response;
   }
 };
