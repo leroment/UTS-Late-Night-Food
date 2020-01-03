@@ -86,9 +86,8 @@ module.exports = class Receive {
       response = Location.handlePayload(payload);
     } else if (payload.includes("MENU")) {
       response = Menu.handlePayload(payload, title);
-      else if (payload.includes("ORDER")) {
-        response = Order.handlePayload(payload);
-      }
+    } else if (payload.includes("ORDER")) {
+      response = Order.handlePayload(payload);
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`
