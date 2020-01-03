@@ -37,7 +37,7 @@ module.exports = class Menu {
     return responses;
   }
 
-  generateMenu() {
+  static generateMenu() {
     let responses = [];
 
     let text = Response.genText("Please select from the following menu items:");
