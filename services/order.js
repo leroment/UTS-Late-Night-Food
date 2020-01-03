@@ -32,17 +32,14 @@ module.exports = class Order {
 
       let orderSummary = this.generateOrderSummary();
 
+      let buttons = Response.genButtonTemplate("", [
+        Response.genPostbackButton("Add more to order", "ADD_ORDER"),
+        Response.genPostbackButton("Revise order", "REVISE_ORDER"),
+        Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
+      ]);
+
       responses.push(q);
-
-      let buttons = Response.genButtonTemplate(
-        "Please select from the following options",
-        [
-          Response.genPostbackButton("Add more to order", "ADD_ORDER"),
-          Response.genPostbackButton("Revise order", "REVISE_ORDER"),
-          Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
-        ]
-      );
-
+      responses.push(orderSummary);
       responses.push(buttons);
 
       dish = "";
