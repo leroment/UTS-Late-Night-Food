@@ -1,57 +1,104 @@
 "use strict";
 
+let order = [];
+let editDishQty = false;
+
 const Response = require("./response"),
   Menu = require("./menu");
 
-let dish;
-let order = [];
-
 module.exports = class Order {
-  static get dish() {
-    return dish;
-  }
-
-  static set dish(d) {
-    dish = d;
-  }
-
   static handlePayload(payload, message = "") {
     let responses = [];
 
     if (payload === "NUMBEROFORDERS") {
       let quantityOfDish = message;
-      let q = Response.genText(
-        `You have selected ${quantityOfDish} sets of ${dish}.`
-      );
-      console.log(`The dish is ${dish}`);
+      let dish = Menu.dish;
 
-      order.push({
-        dish: dish,
-        quantity: quantityOfDish
-      });
+      if (editDishQty) {
+        order.find(o => o.dish == dish).quantity = quantityOfDish;
+        responses.push(
+          Response.genText(
+            `You have changed quantity of dish ${dish} to ${quantityOfDish}`
+          )
+        );
+        editDishQty = false;
+        responses = responses.concat(this.generateOrderSummary());
+      } else {
+        responses.push(
+          Response.genText(
+            `You have selected ${quantityOfDish} sets of ${dish}.`
+          )
+        );
+        console.log(`The dish is ${dish}`);
 
-      let orderSummary = this.generateOrderSummary();
+        if (!order.some(o => o.dish == dish)) {
+          order.push({
+            dish: dish,
+            quantity: quantityOfDish
+          });
+        } else {
+          let oldOrder = order.find(o => o.dish == dish);
 
-      let buttons = Response.genButtonTemplate(
-        "Please select from the following",
-        [
-          Response.genPostbackButton("Add more to order", "ADD_ORDER"),
-          Response.genPostbackButton("Revise order", "REVISE_ORDER"),
-          Response.genPostbackButton("Finalise Order", "FINALISE_ORDER")
-        ]
-      );
+          oldOrder.quantity += quantityOfDish;
 
-      responses.push(q);
-      responses.push(orderSummary);
-      responses.push(buttons);
+          let index = order.indexOf(oldOrder);
 
+          order.splice(index, 1);
+
+          order.push(oldOrder);
+        }
+        responses = responses.concat(this.generateOrderSummary());
+      }
       dish = "";
+      Menu.dish = "";
     } else if (payload === "ADD_ORDER") {
-      console.log(Response);
-      let response = Menu.handlePayload("MENU_SELECTED", "HELLO");
-      responses.push(response);
+      responses = responses.concat(Menu.handlePayload("MENU_SELECTED"));
     } else if (payload === "REVISE_ORDER") {
+      order.forEach((item, index) => {
+        responses.push(
+          Response.genButtonTemplate(`${index + 1}. Edit ${item.dish}`, [
+            Response.genPostbackButton(
+              "Edit Quantity",
+              `EDIT_ORDER_QTY_${index}`
+            ),
+            Response.genPostbackButton(
+              "Delete Selection",
+              `DELETE_ORDER_${index}`
+            ),
+            Response.genPostbackButton(
+              "Cancel Revise Selection",
+              "CANCEL_ORDER_SELECTION"
+            )
+          ])
+        );
+      });
     } else if (payload === "FINALISE_ORDER") {
+      responses.push(
+        Response.genText("Your menu selection has been confirmed!")
+      );
+      responses.push(Response.genOptions("MENU_UPDATED"));
+    } else if (payload === "CANCEL_ORDER_SELECTION") {
+      responses.push(
+        Response.genButtonTemplate("Please select from the following", [
+          Response.genPostbackButton("Add Menu Selection", "ADD_ORDER"),
+          Response.genPostbackButton("Revise Menu Selection", "REVISE_ORDER"),
+          Response.genPostbackButton(
+            "Finalise Menu Selection",
+            "FINALISE_ORDER"
+          )
+        ])
+      );
+    } else if (payload.includes("EDIT_ORDER_QTY")) {
+      let index = payload.slice(15);
+      responses.push(Response.genText("How many?"));
+      Menu.dish = order[index].dish;
+      editDishQty = true;
+    } else if (payload.includes("DELETE_ORDER")) {
+      let index = payload.slice(13);
+      let dish = order[index].dish;
+      order.splice(index, 1);
+      responses.push(Response.genText(`Selection ${dish} has been deleted.`));
+      responses = responses.concat(this.generateOrderSummary());
     } else {
       responses = [];
     }
@@ -60,14 +107,21 @@ module.exports = class Order {
   }
 
   static generateOrderSummary() {
-    let orderSummary = `Here is your order:\n`;
+    let orderSummary = `Here is your menu selection:\n`;
 
     order.forEach((item, index) => {
       orderSummary += `${index + 1}. ${item.dish} x ${item.quantity}\n`;
     });
 
     let response = Response.genText(orderSummary);
-
-    return response;
+    let buttons = Response.genButtonTemplate(
+      "Please select from the following",
+      [
+        Response.genPostbackButton("Add Menu Selection", "ADD_ORDER"),
+        Response.genPostbackButton("Revise Menu Selection", "REVISE_ORDER"),
+        Response.genPostbackButton("Finalise Menu Selection", "FINALISE_ORDER")
+      ]
+    );
+    return [response, buttons];
   }
 };

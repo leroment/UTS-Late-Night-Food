@@ -1,31 +1,34 @@
 "use strict";
 
-const Response = require("./response"),
-  Order = require("./order");
+const Response = require("./response");
+
+let dish;
 
 module.exports = class Menu {
+  static get dish() {
+    return dish;
+  }
+
+  static set dish(d) {
+    dish = d;
+  }
+
   static handlePayload(payload, message = "") {
     let responses = [];
-
     if (payload === "MENU_SELECTED") {
       responses = this.generateMenu();
     } else {
       let text = Response.genText(`You have selected ${message}.`);
       // assign dish property to order class
-      Order.dish = message;
-
+      dish = message;
       let number = Response.genText("How many?");
-
       responses.push(text);
       responses.push(number);
     }
-
     return responses;
   }
-
   static generateMenu() {
     let responses = [];
-
     let text = Response.genText("Please select from the following menu items:");
     let menu = Response.genGenericCarouselTemplate([
       Response.genElements(
@@ -49,7 +52,6 @@ module.exports = class Menu {
     ]);
     responses.push(text);
     responses.push(menu);
-
     return responses;
   }
 };

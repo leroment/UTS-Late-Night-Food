@@ -1,6 +1,16 @@
 "use strict";
 
+let status = [];
+
 module.exports = class Response {
+  static get status() {
+    return status;
+  }
+
+  static set status(s) {
+    status = s;
+  }
+
   static genQuickReply(text, quickReplies) {
     let response = {
       text: text,
@@ -152,16 +162,42 @@ module.exports = class Response {
     return [welcome, buttons];
   }
 
-  static genOptions() {
-    let buttons = this.genButtonTemplate(
-      "Please select from the following options:",
-      [
-        this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
-        this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
-        this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
-      ]
-    );
+  static genOptions(payload) {
+    let buttons;
 
-    return [buttons];
+    if (!status.includes(payload)) {
+      status.push(payload);
+    }
+
+    if (status.length == 1) {
+      buttons = this.genButtonTemplate(
+        "Please select from the following options:",
+        [
+          status[0] == "LOCATION_UPDATED"
+            ? this.genPostbackButton("Update Location", "LOCATION_SELECTED")
+            : this.genPostbackButton("Choose Location", "LOCATION_SELECTED"),
+          status[0] == "MENU_UPDATED"
+            ? this.genPostbackButton("Update Menu", "MENU_SELECTED")
+            : this.genPostbackButton("Choose Menu", "MENU_SELECTED"),
+          this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+        ]
+      );
+    } else if (status.length == 2) {
+      if (
+        status.includes("LOCATION_UPDATED") &&
+        status.includes("MENU_UPDATED")
+      ) {
+        buttons = this.genButtonTemplate(
+          "Please select from the following options:",
+          [
+            this.genPostbackButton("Update Location", "LOCATION_SELECTED"),
+            this.genPostbackButton("Update Menu", "MENU_SELECTED"),
+            this.genPostbackButton("Finalise Payment", "PAYMENT_SELECTED")
+          ]
+        );
+      }
+    }
+
+    return buttons;
   }
 };

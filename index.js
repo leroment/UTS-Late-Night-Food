@@ -29,7 +29,7 @@ MongoClient.connect(
     Database.database = db;
 
     // Sets server port and logs message on sucess
-    app.listen(process.env.PORT || 1337, () =>
+    app.listen(process.env.PORT || 8000, () =>
       console.log("webhook is listening")
     );
   }
