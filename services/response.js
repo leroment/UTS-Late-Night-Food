@@ -147,6 +147,18 @@ module.exports = class Response {
     return response;
   }
 
+  static genWebViewButton(title, url) {
+    let response = {
+      type: "web_url",
+      title: title,
+      url: url,
+      webview_height_ratio: "compact",
+      messenger_extensions: true
+    };
+
+    return response;
+  }
+
   static genNuxMessage() {
     let welcome = this.genText("Hi, Welcome to UTS Late Night Food.");
 

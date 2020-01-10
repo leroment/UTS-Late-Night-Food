@@ -8,6 +8,7 @@ const Response = require("./response"),
   Location = require("./location"),
   Menu = require("./menu"),
   Order = require("./order"),
+  Payment = require("./payment"),
   request = require("request");
 
 module.exports = class Receive {
@@ -80,7 +81,7 @@ module.exports = class Receive {
 
     let response;
 
-    if (payload === "GET_STARTED") {
+    if (payload === "WELCOME_MESSAGE") {
       response = Response.genNuxMessage();
     } else if (payload.includes("LOCATION")) {
       response = Location.handlePayload(payload);
@@ -88,6 +89,8 @@ module.exports = class Receive {
       response = Menu.handlePayload(payload, title);
     } else if (payload.includes("ORDER")) {
       response = Order.handlePayload(payload);
+    } else if (payload.includes("PAYMENT")) {
+      response = Payment.handlePayload(payload);
     } else {
       response = {
         text: `This is a default postback message for payload: ${payload}!`

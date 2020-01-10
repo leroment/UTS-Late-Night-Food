@@ -124,4 +124,25 @@ module.exports = class Order {
     );
     return [response, buttons];
   }
+
+  static generateReceiptSummary() {
+    let response;
+    if (order.length == 0) {
+      response = Response.genText(
+        "Sorry, you have no orders. Please select the menu before proceeding to payment!"
+      );
+
+      return response;
+    }
+
+    let orderSummary = `Here is your order:\n`;
+
+    order.forEach((item, index) => {
+      orderSummary += `${index + 1}. ${item.dish} x ${item.quantity}\n`;
+    });
+
+    response = Response.genText(orderSummary);
+
+    return response;
+  }
 };
