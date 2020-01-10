@@ -3,6 +3,11 @@
 let order = [];
 let editDishQty = false;
 
+require("dotenv").config();
+
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const SERVER_URL = process.env.SERVER_URL;
+
 const Response = require("./response"),
   Menu = require("./menu");
 
@@ -126,10 +131,12 @@ module.exports = class Order {
   }
 
   static generateReceiptSummary() {
-    let response;
+    let response = [];
     if (order.length == 0) {
-      response = Response.genText(
-        "Sorry, you have no orders. Please select the menu before proceeding to payment!"
+      response.push(
+        Response.genText(
+          "Sorry, you have no orders. Please select the menu before proceeding to payment!"
+        )
       );
 
       return response;
@@ -141,7 +148,13 @@ module.exports = class Order {
       orderSummary += `${index + 1}. ${item.dish} x ${item.quantity}\n`;
     });
 
-    response = Response.genText(orderSummary);
+    response.push(Response.genText(orderSummary));
+
+    response.push(
+      Response.genButtonTemplate(`Please finalise your payment!`, [
+        Response.genWebViewButton("PAY NOW", `${SERVER_URL}/paypal`)
+      ])
+    );
 
     return response;
   }
