@@ -152,7 +152,10 @@ module.exports = class Order {
 
     response.push(
       Response.genButtonTemplate(`Please finalise your payment!`, [
-        Response.genWebViewButton("PAY NOW", `${SERVER_URL}/paypal`)
+        Response.genWebViewButton(
+          "PAY NOW",
+          `https://utslatenightfood.herokuapp.com/paypal`
+        )
       ])
     );
 
