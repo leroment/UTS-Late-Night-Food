@@ -29,8 +29,11 @@
     <div id="paypal-button-container"></div>
 
     <script>
-      var name = "<%- IS_LOGGED %>";
-      console.log(name);
+      var req = new XMLHttpRequest();
+      req.open("GET", document.location, false);
+      req.send(null);
+      var headers = req.getAllResponseHeaders().toLowerCase();
+      console.log(headers);
 
       paypal
         .Buttons({
