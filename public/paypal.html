@@ -29,6 +29,9 @@
     <div id="paypal-button-container"></div>
 
     <script>
+      var andrew = "<%= name %>";
+      console.log(andrew);
+
       paypal
         .Buttons({
           createOrder: function(data, actions) {
