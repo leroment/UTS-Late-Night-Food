@@ -25,12 +25,13 @@
     </script>
 
     <script src="https://www.paypal.com/sdk/js?client-id=AYGzo46fbPHLAjdQc5yn-SkfWnQs5t-DejtabGL4fq1Y8ORdQBKUn5rTXkG1KepVPRiVrXKNMYDv6QZs"></script>
+    <script src="ejs.js"></script>
 
     <div id="paypal-button-container"></div>
 
     <script>
-      var andrew = "<%= name %>";
-      console.log(andrew);
+      var name = "<%= name %>";
+      console.log(name);
 
       paypal
         .Buttons({
