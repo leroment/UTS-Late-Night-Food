@@ -33,6 +33,9 @@ MongoClient.connect(
       console.log("webhook is listening")
     );
 
+    app.set("view engine", "ejs");
+    app.set("views", path.join(__dirname, "views"));
+
     app.use(express.static("public"));
   }
 );
@@ -46,7 +49,8 @@ app.get("/paypal", (req, res, next) => {
     } else if (referer.indexOf("www.facebook.com") >= 0) {
       res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.facebook.com/");
     }
-    res.sendFile("public/paypal.html", { root: __dirname, name: "Andrew" });
+    res.render("public/paypal.html", { IS_LOGGED: true });
+    // res.sendFile("public/paypal.html", { root: __dirname });
   }
 });
 

@@ -25,12 +25,11 @@
     </script>
 
     <script src="https://www.paypal.com/sdk/js?client-id=AYGzo46fbPHLAjdQc5yn-SkfWnQs5t-DejtabGL4fq1Y8ORdQBKUn5rTXkG1KepVPRiVrXKNMYDv6QZs"></script>
-    <script src="ejs.js"></script>
 
     <div id="paypal-button-container"></div>
 
     <script>
-      var name = "<%= name %>";
+      var name = "<%- IS_LOGGED %>";
       console.log(name);
 
       paypal
