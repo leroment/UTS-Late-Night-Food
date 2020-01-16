@@ -10,6 +10,7 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   MongoClient = require("mongodb").MongoClient,
   ejs = require("ejs"),
+  paypal = require("paypal-rest-sdk"),
   app = express().use(bodyParser.json());
 
 var db;
@@ -36,7 +37,7 @@ MongoClient.connect(
       console.log("webhook is listening")
     );
 
-    app.use(express.static("public"));
+    // app.use(express.static("public"));
   }
 );
 
@@ -50,7 +51,7 @@ app.get("/paypal", (req, res, next) => {
       res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.facebook.com/");
     }
 
-    res.render("public/paypal.ejs");
+    res.render("public/paypal");
   }
 });
 
