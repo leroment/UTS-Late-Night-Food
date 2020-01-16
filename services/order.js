@@ -12,6 +12,10 @@ const Response = require("./response"),
   Menu = require("./menu");
 
 module.exports = class Order {
+  static get order() {
+    return order;
+  }
+
   static handlePayload(payload, message = "") {
     let responses = [];
 

@@ -7,6 +7,7 @@ const express = require("express"),
   Receive = require("./services/receive"),
   Database = require("./services/database"),
   Profile = require("./services/profile"),
+  Order = require("./services/order"),
   bodyParser = require("body-parser"),
   MongoClient = require("mongodb").MongoClient,
   ejs = require("ejs"),
@@ -15,6 +16,14 @@ const express = require("express"),
 
 var db;
 var database;
+
+paypal.configure({
+  mode: "sandbox", // sandbox or live
+  client_id:
+    "AYGzo46fbPHLAjdQc5yn-SkfWnQs5t-DejtabGL4fq1Y8ORdQBKUn5rTXkG1KepVPRiVrXKNMYDv6QZs",
+  client_secret:
+    "EM5Xc42D8wtCs0cI7wiVbeEfjX2h6Ki_xFgi7EWLEDWMgll-UUuX78f3cNjaMpQOmixBd-Agkqiff1rX"
+});
 
 MongoClient.connect(
   "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/utslatenightfood",
@@ -53,6 +62,51 @@ app.get("/paypal", (req, res, next) => {
 
     res.render("paypal");
   }
+});
+
+app.post("/pay", (req, res) => {
+  let order = Order.order;
+
+  const create_payment_json = {
+    intent: "sale",
+    payer: {
+      payment_method: "paypal"
+    },
+    redirect_urls: {
+      return_url: "https://utslatenightfood.herokuapp.com/success",
+      cancel_url: "https://utslatenightfood.herokuapp.com/cancel"
+    },
+    transactions: [
+      {
+        item_list: {
+          items: [
+            {
+              name: "Menu Item 1",
+              sku: "001",
+              price: "25.00",
+              currency: "AUD",
+              quantity: 1
+            }
+          ]
+        },
+        amount: {
+          currency: "AUD",
+          total: "25.00"
+        },
+        description: "Payment made for late night food"
+      }
+    ]
+  };
+
+  paypal.payment.create(create_payment_json, function(error, payment) {
+    if (error) {
+      throw error;
+    } else {
+      console.log("Create Payment Response");
+      console.log(payment);
+      res.send("test");
+    }
+  });
 });
 
 // Adds support for GET requests to our webhook
