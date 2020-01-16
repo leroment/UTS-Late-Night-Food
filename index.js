@@ -51,7 +51,7 @@ app.get("/paypal", (req, res, next) => {
       res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.facebook.com/");
     }
 
-    res.render("public/paypal");
+    res.render("paypal");
   }
 });
 
