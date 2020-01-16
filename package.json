@@ -15,6 +15,7 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "mongodb": "^3.4.1",
+    "paypal-rest-sdk": "^1.8.1",
     "random-word": "^2.0.0",
     "request": "^2.88.0"
   }

@@ -9,6 +9,7 @@ const express = require("express"),
   Profile = require("./services/profile"),
   bodyParser = require("body-parser"),
   MongoClient = require("mongodb").MongoClient,
+  ejs = require("ejs"),
   app = express().use(bodyParser.json());
 
 var db;
@@ -28,6 +29,8 @@ MongoClient.connect(
 
     Database.database = db;
 
+    app.set("view engine", "ejs");
+
     // Sets server port and logs message on sucess
     app.listen(process.env.PORT || 8000, () =>
       console.log("webhook is listening")
@@ -46,7 +49,7 @@ app.get("/paypal", (req, res, next) => {
     } else if (referer.indexOf("www.facebook.com") >= 0) {
       res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.facebook.com/");
     }
-    res.sendFile("public/paypal.html", { root: __dirname, name: "Andrew" });
+    res.sendFile("public/paypal.html", { root: __dirname });
   }
 });
 
