@@ -33,7 +33,7 @@ MongoClient.connect(
       console.log(err);
       return;
     }
-    console.log("Database success!");
+    console.log("Database success!!");
 
     db = server.db("utslatenightfood");
 
