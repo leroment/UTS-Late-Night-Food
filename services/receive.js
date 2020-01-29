@@ -122,6 +122,8 @@ module.exports = class Receive {
 
     if (Number(message)) {
       response = Order.handlePayload("NUMBEROFORDERS", Number(message));
+    } else if ((message = "GET STARTED")) {
+      response = this.handlePayload("WELCOME_MESSAGE");
     } else {
       response = Response.genText(
         "HELLO!!! This is a robot generated message!"
