@@ -6,6 +6,7 @@
     <!-- Optimal Internet Explorer compatibility -->
   </head>
   <body>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
     <script>
       (function(d, s, id) {
         var js,
@@ -46,6 +47,17 @@
           }
         );
 
+        pay = () => {
+          axios
+            .post("https://utslatenightfood.herokuapp.com/pay", {})
+            .then(function(response) {
+              console.log(response);
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+        };
+
         closeWebview = () => {
           MessengerExtensions.requestCloseBrowser(
             function success() {
@@ -59,8 +71,10 @@
       };
     </script>
 
-    <form action="https://utslatenightfood.herokuapp.com/pay" method="post">
+    <!-- <form onclick="https://utslatenightfood.herokuapp.com/pay" method="post">
       <input type="submit" value="Pay Now" />
-    </form>
+    </form> -->
+
+    <input type="button" value="Pay Now" onclick="pay()" />
   </body>
 </html>
