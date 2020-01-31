@@ -79,15 +79,28 @@
               // This function captures the funds from the transaction.
               return actions.order.capture().then(function(details) {
                 // This function shows a transaction success message to your buyer.
-                alert(
-                  "Transaction completed by " + details.payer.name.given_name
-                );
+                // alert(
+                //   "Transaction completed by " + details.payer.name.given_name
+                // );
                 MessengerExtensions.requestCloseBrowser(
                   function success() {
                     console.log("Webview closing");
                   },
                   function error(err) {
                     console.log(err);
+                  }
+                );
+
+                return fetch(
+                  "https://utslatenightfood.herokuapp.com/paypal-transaction-complete",
+                  {
+                    method: "post",
+                    headers: {
+                      "content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                      orderID: data.orderID
+                    })
                   }
                 );
               });
