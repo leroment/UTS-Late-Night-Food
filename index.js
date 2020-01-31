@@ -12,7 +12,7 @@ const express = require("express"),
   MongoClient = require("mongodb").MongoClient,
   ejs = require("ejs"),
   // paypal = require("paypal-rest-sdk"),
-  paypal = require('@paypal/checkout-server-sdk'),
+  paypal = require("@paypal/checkout-server-sdk"),
   app = express().use(bodyParser.json());
 
 var db;
@@ -27,11 +27,12 @@ var database;
 // });
 
 // Creating an environment
-let clientId = "AYGzo46fbPHLAjdQc5yn-SkfWnQs5t-DejtabGL4fq1Y8ORdQBKUn5rTXkG1KepVPRiVrXKNMYDv6QZs";
-let clientSecret = "EM5Xc42D8wtCs0cI7wiVbeEfjX2h6Ki_xFgi7EWLEDWMgll-UUuX78f3cNjaMpQOmixBd-Agkqiff1rX";
+let clientId =
+  "AYGzo46fbPHLAjdQc5yn-SkfWnQs5t-DejtabGL4fq1Y8ORdQBKUn5rTXkG1KepVPRiVrXKNMYDv6QZs";
+let clientSecret =
+  "EM5Xc42D8wtCs0cI7wiVbeEfjX2h6Ki_xFgi7EWLEDWMgll-UUuX78f3cNjaMpQOmixBd-Agkqiff1rX";
 let environment = new paypal.core.SandboxEnvironment(clientId, clientSecret);
 let client = new paypal.core.PayPalHttpClient(environment);
-
 
 MongoClient.connect(
   "mongodb+srv://leroment:db12345678@utslatenightfood-px2cd.mongodb.net/utslatenightfood",
@@ -151,7 +152,7 @@ app.get("/paypal", (req, res, next) => {
 
 // app.get("/cancel", (req, res) => res.send("Cancelled"));
 
-app.post("/paypal-transaction-complete", (req, res) => {
+app.post("/paypal-transaction-complete", async function(req, res) {
   const orderID = req.body.orderID;
 
   // 3. Call PayPal to capture the order
@@ -160,8 +161,7 @@ app.post("/paypal-transaction-complete", (req, res) => {
 
   let order;
   try {
-
-    order = await client.execute(request);
+    order = client.execute(request);
     // const capture = await client.execute(request);
 
     // // 4. Save the capture ID to your database. Implement logic to save capture to your database for future reference.
@@ -169,16 +169,14 @@ app.post("/paypal-transaction-complete", (req, res) => {
     //     .payments.captures[0].id;
 
     console.log("The order is: " + order);
-
   } catch (err) {
-
     // 5. Handle any errors from the call
     console.error(err);
     return res.send(500);
   }
 
   // 5. Validate the transaction details are as expected
-  if (order.result.purchase_units[0].amount.value !== '0.01') {
+  if (order.result.purchase_units[0].amount.value !== "0.01") {
     return res.send(400);
   }
 
