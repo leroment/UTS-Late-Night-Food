@@ -82,16 +82,15 @@
                 alert(
                   "Transaction completed by " + details.payer.name.given_name
                 );
+                MessengerExtensions.requestCloseBrowser(
+                  function success() {
+                    console.log("Webview closing");
+                  },
+                  function error(err) {
+                    console.log(err);
+                  }
+                );
               });
-
-              MessengerExtensions.requestCloseBrowser(
-                function success() {
-                  console.log("Webview closing");
-                },
-                function error(err) {
-                  console.log(err);
-                }
-              );
             }
           })
           .render("#paypal-button-container");
